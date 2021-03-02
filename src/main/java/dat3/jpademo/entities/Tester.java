@@ -23,11 +23,14 @@ public class Tester {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
         EntityManager em = emf.createEntityManager();
        
-        Person p1 = new Person("Jacob", 1993);
-        Person p2 = new Person("steffen", 1995);
+        Person p1 = new Person("Jønke", 1963);
+        Person p2 = new Person("Blondie",1959);
+        Person p3 = new Person("Jacob", 1993);
+
         
-        Address a1 = new Address("langgade 62", 2480, "stege");
-        Address a2 = new Address("udbyvej 16", 2480, "udby");
+        
+        Address a1 = new Address("Store Torv 1", 2323, "Nr. Snede");
+        Address a2 = new Address("Langgade 34", 1212, "Valby");
 
         
         
@@ -37,18 +40,43 @@ public class Tester {
         Fee f1 = new Fee(100);
         Fee f2 = new Fee(200);
         Fee f3 = new Fee(300);
+     
+  
         
         
         p1.AddFee(f1);
         p1.AddFee(f3);
         p2.AddFee(f2);
+
         
+        SwimStyle s1 = new SwimStyle("Crawl");
+        SwimStyle s2 = new SwimStyle("ButterFly");
+        SwimStyle s3 = new SwimStyle("Breast stroke");
+        
+        p1.addSwimStyle(s1);
+        p1.addSwimStyle(s3);
+        p2.addSwimStyle(s2);
         
         em.getTransaction().begin();
              em.persist(p1);
              em.persist(p2);
-        
         em.getTransaction().commit();
+        
+        
+        
+        
+          em.getTransaction().begin();
+          p1.removeSwimStyle(s3);
+                 
+        em.getTransaction().commit();
+        
+        
+        
+        
+        
+        
+        
+        
         
         System.out.println("p1: " + p1.getP_id() + ", " + p1.getName());
         
