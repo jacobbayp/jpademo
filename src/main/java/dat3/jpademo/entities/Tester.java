@@ -5,9 +5,11 @@
  */
 package dat3.jpademo.entities;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -32,10 +34,19 @@ public class Tester {
         p1.setAddress(a1);
         p2.setAddress(a2);
         
+        Fee f1 = new Fee(100);
+        Fee f2 = new Fee(200);
+        Fee f3 = new Fee(300);
+        
+        
+        p1.AddFee(f1);
+        p1.AddFee(f3);
+        p2.AddFee(f2);
+        
+        
         em.getTransaction().begin();
-       // em.persist(a2);
-       //em.persist(p1);
-        em.persist(p2);
+             em.persist(p1);
+             em.persist(p2);
         
         em.getTransaction().commit();
         
@@ -46,6 +57,18 @@ public class Tester {
         System.out.println("Jacobs gade: " + p1.getAddress().getStreet());
         
         System.out.println("Lad os se om to-vejs virker: " + a1.getPerson().getName());
+        
+        System.out.println("Hvem har betalt f2? Det har: " + f2.getPerson().getName());
+        
+        
+        System.out.println("Hvad er det blevet betalt i alt?");
+        
+        TypedQuery<Fee> q1 = em.createQuery("SELECT f FROM Fee f", Fee.class);
+        List<Fee> fees = q1.getResultList();
+        
+        for(Fee f: fees){
+            System.out.println(f.getPerson().getName() +  ": " +f.getAmount() + "kr. Den: " + f.getPayDate() + ", adr: " + f.getPerson().getAddress().getCity());
+        }
         
         
     }
