@@ -22,10 +22,19 @@ public class Tester {
         EntityManager em = emf.createEntityManager();
        
         Person p1 = new Person("Jacob", 1993);
-        Person p2 = new Person("Sarah", 1995);
+        Person p2 = new Person("steffen", 1995);
+        
+        Address a1 = new Address("langgade 62", 2480, "stege");
+        Address a2 = new Address("udbyvej 16", 2480, "udby");
+
+        
+        
+        p1.setAddress(a1);
+        p2.setAddress(a2);
         
         em.getTransaction().begin();
-        em.persist(p1);
+       // em.persist(a2);
+       //em.persist(p1);
         em.persist(p2);
         
         em.getTransaction().commit();
@@ -33,6 +42,10 @@ public class Tester {
         System.out.println("p1: " + p1.getP_id() + ", " + p1.getName());
         
         System.out.println("p2: " + p2.getP_id() + ", " + p1.getName());
+        
+        System.out.println("Jacobs gade: " + p1.getAddress().getStreet());
+        
+        System.out.println("Lad os se om to-vejs virker: " + a1.getPerson().getName());
         
         
     }

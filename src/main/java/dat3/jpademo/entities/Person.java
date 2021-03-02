@@ -6,10 +6,12 @@
 package dat3.jpademo.entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -24,6 +26,9 @@ public class Person implements Serializable {
     private Long p_id;
     private String name;
     private int year;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Address address;
+    
 
     public Person(String name, int year) {
         this.name = name;
@@ -35,6 +40,19 @@ public class Person implements Serializable {
     public Person() {
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+        if(address != null){
+            address.setPerson(this);
+        }
+    }
+
+    
+    
     public Long getP_id() {
         return p_id;
     }
